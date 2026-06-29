@@ -3,7 +3,7 @@ const userId = "6a294e168fc45d7e66ef4c01";
 async function createPost() {
     const content = document.getElementById("postContent").value;
 
-    await fetch("http://localhost:5000/post", {
+    await fetch("https://codealpha-tasks-apqo.onrender.com/post", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -18,7 +18,7 @@ async function createPost() {
 }
 
 async function likePost(postId) {
-    await fetch(`http://localhost:5000/like/${postId}`, {
+    await fetch(`https://codealpha-tasks-apqo.onrender.com/like/${postId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -33,7 +33,7 @@ async function likePost(postId) {
 
 async function loadPosts() {
 
-    const res = await fetch("http://localhost:5000/posts");
+    const res = await fetch("https://codealpha-tasks-apqo.onrender.com/posts");
     const posts = await res.json();
 
     let html = "";
@@ -94,7 +94,7 @@ async function addComment(postId) {
         `comment-${postId}`
     ).value;
 
-    await fetch("http://localhost:5000/comment", {
+    await fetch("https://codealpha-tasks-apqo.onrender.com/comment", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
