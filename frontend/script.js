@@ -1,4 +1,9 @@
-const userId = "6a294e168fc45d7e66ef4c01";
+const userId = localStorage.getItem("userId");
+
+if (!userId) {
+    alert("Please login first");
+    window.location.href = "index.html";
+}
 
 async function createPost() {
     const content = document.getElementById("postContent").value;
@@ -109,3 +114,9 @@ async function addComment(postId) {
     loadPosts();
 }
 loadPosts();
+function logout() {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("username");
+
+    window.location.href = "login.html";
+}
