@@ -2,38 +2,52 @@
 <html>
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
 </head>
 <body>
 
-<div class="container">
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
 
-    <h2>Login</h2>
+<div class="login-container">
 
-    <input
-        type="email"
-        id="email"
-        placeholder="Email"
-    >
+    <div class="logo">
+        📸
+        <h1>SocialGram</h1>
+        <p>Connect • Create • Inspire</p>
+    </div>
 
-    <input
-        type="password"
-        id="password"
-        placeholder="Password"
-    >
+    <div class="login-card">
 
-    <button onclick="login()">
-        Login
-    </button>
+        <h2>Welcome Back 👋</h2>
 
-    <p>
-        Don't have an account?
-        <a href="register.html">Register</a>
-    </p>
+        <input
+            type="email"
+            id="email"
+            placeholder="Email Address"
+        >
+
+        <input
+            type="password"
+            id="password"
+            placeholder="Password"
+        >
+
+        <button onclick="login()">
+            Sign In
+        </button>
+
+        <p class="bottom-text">
+            Don't have an account?
+
+            <a href="register.html">
+                Create One
+            </a>
+        </p>
+
+    </div>
 
 </div>
 
 <script src="login.js"></script>
-
-</body>
 </html>
