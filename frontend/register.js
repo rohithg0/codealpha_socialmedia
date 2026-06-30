@@ -21,6 +21,7 @@ async function register() {
     alert(data);
 
     if (data === "User registered successfully") {
-        window.location.href = "login.html";
-    }
+    alert("Registration Successful! Please login.");
+    window.location.href = "index.html";
+}
 }

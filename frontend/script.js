@@ -1,14 +1,9 @@
-const userId = localStorage.getItem("userId");
-
-if (!userId) {
-    alert("Please login first");
-    window.location.href = "index.html";
-}
+const userId = "6a294e168fc45d7e66ef4c01";
 
 async function createPost() {
     const content = document.getElementById("postContent").value;
 
-    await fetch("https://codealpha-tasks-apqo.onrender.com/post", {
+    await fetch("http://localhost:5000/post", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -23,7 +18,7 @@ async function createPost() {
 }
 
 async function likePost(postId) {
-    await fetch(`https://codealpha-tasks-apqo.onrender.com/like/${postId}`, {
+    await fetch(`http://localhost:5000/like/${postId}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -38,7 +33,7 @@ async function likePost(postId) {
 
 async function loadPosts() {
 
-    const res = await fetch("https://codealpha-tasks-apqo.onrender.com/posts");
+    const res = await fetch("http://localhost:5000/posts");
     const posts = await res.json();
 
     let html = "";
@@ -99,7 +94,7 @@ async function addComment(postId) {
         `comment-${postId}`
     ).value;
 
-    await fetch("https://codealpha-tasks-apqo.onrender.com/comment", {
+    await fetch("http://localhost:5000/comment", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -114,9 +109,3 @@ async function addComment(postId) {
     loadPosts();
 }
 loadPosts();
-function logout() {
-    localStorage.removeItem("userId");
-    localStorage.removeItem("username");
-
-    window.location.href = "login.html";
-}
