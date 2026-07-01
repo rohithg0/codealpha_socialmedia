@@ -28,6 +28,8 @@ async function loadUsers() {
                 <button onclick="followUser('${user._id}')">
                     Follow
                 </button>
+                <script>console.log(user._id);
+                </script>
 
             </div>
         `;
@@ -39,7 +41,8 @@ async function loadUsers() {
 }
 
 async function followUser(targetUserId){
-
+    console.log("Current User:", currentUser);
+    console.log("Target User:", targetUserId);
     const res = await fetch(`https://codealpha-tasks-apqo.onrender.com/follow/${targetUserId}`,{
 
         method:"POST",
