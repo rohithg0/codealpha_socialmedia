@@ -1,11 +1,32 @@
+require("dotenv").config();
+
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const Post = require("./models/Post");
 const Comment = require("./models/Comment");
+const multer = require("multer");
+const path = require("path");
 const app = express();
 
+
 app.use(express.json());
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "uploads/");
+    },
+
+    filename: (req, file, cb) => {
+        cb(
+            null,
+            Date.now() + path.extname(file.originalname)
+        );
+    }
+});
+
+const upload = multer({ storage });
+
+app.use("/uploads", express.static("uploads"));
 app.use(cors());
 
 // MongoDB
@@ -231,4 +252,35 @@ app.get("/users", async (req, res) => {
 // START SERVER
 app.listen(5000, () => {
   console.log("Server running on port 5000");
+});
+app.post("/upload-profile", upload.single("profilePic"), async (req, res) => {
+    try {
+
+        const { userId } = req.body;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        user.profilePic = "/uploads/" + req.file.filename;
+
+        await user.save();
+
+        res.json({
+            success: true,
+            profilePic: user.profilePic
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.json({
+            success: false,
+            message: "Upload failed"
+        });
+    }
 });
