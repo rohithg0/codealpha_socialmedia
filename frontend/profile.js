@@ -57,3 +57,34 @@ async function loadMyPosts() {
 
 loadProfile();
 loadMyPosts();
+async function uploadProfilePic() {
+
+    const file = document.getElementById("profilePicInput").files[0];
+
+    if (!file) {
+        alert("Please select an image.");
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append("profilePic", file);
+    formData.append("userId", localStorage.getItem("userId"));
+
+    const res = await fetch(
+        "https://codealpha-tasks-apqo.onrender.com/upload-profile",
+        {
+            method: "POST",
+            body: formData
+        }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+        alert("Profile picture uploaded successfully!");
+        location.reload();
+    } else {
+        alert(data.message);
+    }
+}
