@@ -102,17 +102,24 @@ app.post("/login", async (req, res) => {
     });
   }
 });
-app.post("/post", async (req, res) => {
+app.post("/post", upload.single("image"), async (req, res) => {
   try {
     console.log("POST ROUTE HIT");
     console.log(req.body);
 
-    const { userId, content } = req.body;
+const { userId, content } = req.body;
 
-    const post = new Post({
-      userId,
-      content
-    });
+let image = "";
+
+if (req.file) {
+    image = req.file.path;
+}
+
+const post = new Post({
+    userId,
+    content,
+    image
+});
 
     await post.save();
 
