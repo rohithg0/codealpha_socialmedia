@@ -7,20 +7,23 @@ const Post = require("./models/Post");
 const Comment = require("./models/Comment");
 const multer = require("multer");
 const path = require("path");
+const { v2: cloudinary } = require("cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
 const app = express();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 
 app.use(express.json());
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "uploads/");
-    },
-
-    filename: (req, file, cb) => {
-        cb(
-            null,
-            Date.now() + path.extname(file.originalname)
-        );
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "profile_pictures",
+        allowed_formats: ["jpg", "jpeg", "png", "webp"]
     }
 });
 
@@ -267,7 +270,7 @@ app.post("/upload-profile", upload.single("profilePic"), async (req, res) => {
             });
         }
 
-        user.profilePic = "/uploads/" + req.file.filename;
+        user.profilePic = req.file.path;
 
         await user.save();
 
