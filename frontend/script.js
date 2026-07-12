@@ -8,18 +8,26 @@ if (!userId) {
 const API = "https://codealpha-tasks-apqo.onrender.com";
 
 async function createPost() {
+
     const content = document.getElementById("postContent").value;
+    const image = document.getElementById("postImage").files[0];
+
+    const formData = new FormData();
+
+    formData.append("userId", userId);
+    formData.append("content", content);
+
+    if (image) {
+        formData.append("image", image);
+    }
 
     await fetch(`${API}/post`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            userId,
-            content
-        })
+        body: formData
     });
+
+    document.getElementById("postContent").value = "";
+    document.getElementById("postImage").value = "";
 
     loadPosts();
 }
@@ -78,9 +86,11 @@ async function loadPosts() {
                 ${post.content}
             </div>
 
-            <div class="post-image">
-                <img src="https://picsum.photos/600/300?random=${post._id}">
-            </div>
+           ${post.image ? `
+<div class="post-image">
+    <img src="${post.image}">
+</div>
+` : ""}
 
             <div class="likes">
                 ❤️ ${post.likes.length} Likes

@@ -41,9 +41,11 @@ async function loadMyPosts() {
                 ${post.content}
             </div>
 
-            <div class="post-image">
-                <img src="https://picsum.photos/600/300?random=${post._id}">
-            </div>
+         ${post.image ? `
+<div class="post-image">
+    <img src="${post.image}">
+</div>
+` : ""}
 
             <div class="likes">
                 ❤️ ${post.likes.length} Likes
