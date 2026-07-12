@@ -7,6 +7,9 @@ async function loadProfile() {
 
     document.getElementById("username").innerText = user.username;
     document.getElementById("email").innerText = user.email;
+    if (user.profilePic) {
+    document.getElementById("profileImage").src = user.profilePic;
+}
 
     document.getElementById("followersCount").innerText =
         user.followers ? user.followers.length : 0;
